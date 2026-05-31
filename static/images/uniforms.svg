@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <rect width="600" height="400" fill="#f8fafc" rx="28"/>
+  <path d="M150 160 L150 280 L220 340 L300 280 L380 340 L450 280 L450 160 L300 80 Z" fill="#1e40af"/>
+  <path d="M250 160 L250 260 L310 260 L310 160" fill="#60a5fa"/>
+  <text x="180" y="290" fill="#fff" font-family="Poppins, sans-serif" font-size="32" font-weight="700">UNIFORMS</text>
+</svg>

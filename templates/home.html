@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduMart - School Supplies</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f8fafc;
+}
+
+header{
+    background:#0f172a;
+    color:white;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:700;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:25px;
+}
+
+.hero{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:80px 8%;
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+    color:white;
+}
+
+.hero-content{
+    max-width:600px;
+}
+
+.hero h1{
+    font-size:56px;
+    line-height:1.1;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:18px;
+    margin-bottom:30px;
+}
+
+.btn{
+    display:inline-block;
+    padding:14px 28px;
+    background:#f59e0b;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    margin-right:15px;
+    font-weight:600;
+}
+
+.categories{
+    padding:80px 8%;
+}
+
+.section-title{
+    text-align:center;
+    font-size:36px;
+    margin-bottom:50px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    padding:30px;
+    text-align:center;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.card h3{
+    margin-top:15px;
+}
+
+.why{
+    padding:80px 8%;
+    background:#e2e8f0;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.feature{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+}
+
+.products{
+    padding:80px 8%;
+}
+
+.product-card{
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.product-card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.product-info{
+    padding:20px;
+}
+
+footer{
+    background:#0f172a;
+    color:white;
+    text-align:center;
+    padding:30px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">EduMart</div>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">Schools</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Everything Your School Needs</h1>
+
+        <p>
+            One-stop destination for stationery, uniforms,
+            bags, sanitary products, sports equipment,
+            classroom essentials and much more.
+        </p>
+
+        <a href="#" class="btn">Shop Now</a>
+        <a href="#" class="btn">Request Quote</a>
+    </div>
+
+    <img src="{% static 'images/hero-school-supplies.svg' %}" width="500" alt="EduMart hero image">
+</section>
+
+<section class="categories">
+    <h2 class="section-title">Shop by Category</h2>
+
+    <div class="grid">
+        <div class="card"><h3>📚 Stationery</h3></div>
+        <div class="card"><h3>🎒 School Bags</h3></div>
+        <div class="card"><h3>👔 Uniforms</h3></div>
+        <div class="card"><h3>🧴 Sanitary Supplies</h3></div>
+        <div class="card"><h3>🏆 Medals & Trophies</h3></div>
+        <div class="card"><h3>⚽ Sports Equipment</h3></div>
+        <div class="card"><h3>🪑 Classroom Supplies</h3></div>
+        <div class="card"><h3>💻 Digital Learning</h3></div>
+    </div>
+</section>
+
+<section class="why">
+    <h2 class="section-title">Why Schools Choose Us</h2>
+
+    <div class="features">
+        <div class="feature">
+            <h3>Bulk Ordering</h3>
+            <p>Special pricing for schools.</p>
+        </div>
+
+        <div class="feature">
+            <h3>Quality Products</h3>
+            <p>Trusted brands and suppliers.</p>
+        </div>
+
+        <div class="feature">
+            <h3>Fast Delivery</h3>
+            <p>Reliable delivery across regions.</p>
+        </div>
+
+        <div class="feature">
+            <h3>Dedicated Support</h3>
+            <p>Personal account manager for schools.</p>
+        </div>
+    </div>
+</section>
+
+<section class="products">
+    <h2 class="section-title">Popular Products</h2>
+
+    <div class="grid">
+
+        <div class="product-card">
+            <img src="{% static 'images/notebooks.svg' %}" alt="Notebooks">
+            <div class="product-info">
+                <h3>Premium Notebooks</h3>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="{% static 'images/school-bags.svg' %}" alt="School Bags">
+            <div class="product-info">
+                <h3>School Bags</h3>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="{% static 'images/uniforms.svg' %}" alt="Uniforms">
+            <div class="product-info">
+                <h3>School Uniforms</h3>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="{% static 'images/sanitizer.svg' %}" alt="Sanitary Products">
+            <div class="product-info">
+                <h3>Sanitary Products</h3>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 EduMart - Complete School Supply Solutions</p>
+</footer>
+
+</body>
+</html>
