@@ -4,8 +4,8 @@ import uuid
 from rest_framework import serializers, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from django.views.decorators.cache import cache_page
-from django.views.decorators.cache import cache_page as cache_decorator
+# from django.views.decorators.cache import cache_page
+# from django.views.decorators.cache import cache_page as cache_decorator
 from django_filters import CharFilter, NumberFilter, FilterSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
@@ -15,14 +15,13 @@ class ProductCategory(models.Model):
     """Product categories"""
     CATEGORIES = [
         ('BAGS', 'School Bags'),
-        ('NOTEBOOKS', 'Notebooks'),
-        ('PENS', 'Pens'),
+        ('STATIONERY', 'Stationery'),
         ('UNIFORMS', 'Uniforms'),
-        ('TIES', 'Ties'),
-        ('BELTS', 'Belts'),
-        ('BADGES', 'Badges'),
-        ('MEDALS', 'Medals'),
-        ('SANITARY', 'Sanitary Items'),
+        ('SANITARY', 'Sanitary Products'),
+        ('SPORTS', 'Sports Equipment'),
+        ('CLASSROOM', 'Classroom Supplies'),
+        ('MEDALS', 'Medals & Trophies'),
+        ('OFFICE', 'Office Supplies'),
         ('ACCESSORIES', 'Other Accessories'),
     ]
 

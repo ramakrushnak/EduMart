@@ -75,14 +75,13 @@ class Command(BaseCommand):
         self.stdout.write('Creating product categories...')
         categories_data = [
             ('BAGS', 'School Bags'),
-            ('NOTEBOOKS', 'Notebooks'),
-            ('PENS', 'Pens'),
+            ('STATIONERY', 'Stationery'),
             ('UNIFORMS', 'Uniforms'),
-            ('TIES', 'Ties'),
-            ('BELTS', 'Belts'),
-            ('BADGES', 'Badges'),
-            ('MEDALS', 'Medals'),
-            ('SANITARY', 'Sanitary Items'),
+            ('SANITARY', 'Sanitary Products'),
+            ('SPORTS', 'Sports Equipment'),
+            ('CLASSROOM', 'Classroom Supplies'),
+            ('MEDALS', 'Medals & Trophies'),
+            ('OFFICE', 'Office Supplies'),
             ('ACCESSORIES', 'Other Accessories'),
         ]
 
@@ -106,14 +105,17 @@ class Command(BaseCommand):
         self.stdout.write('Creating products...')
         product_names = {
             'BAGS': ['School Backpack - Blue', 'School Backpack - Black', 'Gym Bag', 'Lunch Bag'],
-            'NOTEBOOKS': ['100 Pages Notebook', '200 Pages Notebook', 'Graph Notebook', 'Spiral Notebook'],
-            'PENS': ['Blue Pen - Pack of 10', 'Black Pen - Pack of 10', 'Gel Pen - Pack of 5'],
-            'UNIFORMS': ['School Shirt', 'School Pants', 'School Skirt'],
-            'TIES': ['School Tie - Blue', 'School Tie - Black'],
-            'BELTS': ['School Belt - Black', 'School Belt - Brown'],
-            'BADGES': ['School Badge', 'House Badge - Red', 'House Badge - Blue'],
+            'STATIONERY': [
+                '100 Pages Notebook', '200 Pages Notebook', 'Graph Notebook', 'Spiral Notebook',
+                'Blue Pen - Pack of 10', 'Black Ballpoint Pen - Pack of 10', 'Colored Pencil Set',
+                'Mechanical Pencil Set'
+            ],
+            'UNIFORMS': ['School Shirt', 'School Pants', 'School Skirt', 'School Blazer'],
+            'SANITARY': ['Hand Sanitizer - 250ml', 'Hand Sanitizer - 500ml', 'Antibacterial Wipes', 'Soap Bar Set'],
+            'SPORTS': ['Cricket Bat', 'Football', 'Basketball', 'Badminton Racket'],
+            'CLASSROOM': ['Whiteboard', 'Whiteboard Marker Set', 'Chalk Box', 'Easel Pad'],
             'MEDALS': ['Gold Medal', 'Silver Medal', 'Bronze Medal'],
-            'SANITARY': ['Hand Sanitizer', 'Face Mask - Box of 50'],
+            'OFFICE': ['Stapler', 'A4 Paper Pack', 'Desk Organizer', 'Highlighter Set'],
             'ACCESSORIES': ['School Pin', 'Socks - Pack of 3'],
         }
 
