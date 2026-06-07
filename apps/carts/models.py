@@ -77,7 +77,7 @@ class CartItemSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'added_at']
 
     def get_product(self, obj):
-        from apps.products.serializers import ProductSerializer
+        from apps.products.models import ProductSerializer
         return ProductSerializer(obj.product).data
 
     def get_subtotal(self, obj):
@@ -153,6 +153,7 @@ class CartCacheService:
 class CartViewSet(viewsets.ViewSet):
     """Cart management"""
     permission_classes = [IsAuthenticated]
+    serializer_class = CartSerializer
 
     def list(self, request):
         """Get user's cart"""

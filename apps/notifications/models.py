@@ -76,9 +76,12 @@ class NotificationViewSet(viewsets.ReadOnlyModelViewSet):
     """Notification management"""
     permission_classes = [IsAuthenticated]
     serializer_class = NotificationSerializer
+    queryset = Notification.objects.none()
 
     def get_queryset(self):
         """Get user's notifications"""
+        if getattr(self, 'swagger_fake_view', False):
+            return Notification.objects.none()
         return Notification.objects.filter(user=self.request.user)
 
     @action(detail=False, methods=['get'])

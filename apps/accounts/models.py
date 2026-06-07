@@ -88,8 +88,6 @@ class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    username = models.CharField(max_length=150, unique=True)
-
     class Meta:
         db_table = 'users'
         ordering = ['-created_at']

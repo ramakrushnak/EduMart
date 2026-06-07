@@ -134,14 +134,14 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = ['id', 'product_id', 'product', 'quantity', 'unit_price', 'discount_percentage', 'tax_percentage', 'subtotal', 'total']
         read_only_fields = ['id', 'subtotal', 'total']
 
-    def get_product(self, obj):
+    def get_product(self, obj: OrderItem) -> dict:
         from apps.products.serializers import ProductSerializer
         return ProductSerializer(obj.product).data
 
-    def get_subtotal(self, obj):
+    def get_subtotal(self, obj: OrderItem) -> float:
         return obj.get_subtotal()
 
-    def get_total(self, obj):
+    def get_total(self, obj: OrderItem) -> float:
         return obj.get_total()
 
 
@@ -167,9 +167,12 @@ class OrderViewSet(viewsets.ModelViewSet):
     """Order management"""
     permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
+    queryset = Order.objects.none()
 
     def get_queryset(self):
         """Get user's orders"""
+        if getattr(self, 'swagger_fake_view', False):
+            return Order.objects.none()
         return Order.objects.filter(user=self.request.user)
 
     @action(detail=False, methods=['post'])

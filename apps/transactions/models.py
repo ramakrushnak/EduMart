@@ -129,7 +129,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         fields = ['id', 'order_id', 'amount', 'status', 'payment_method', 'transaction_id', 'logs', 'created_at', 'processed_at', 'completed_at']
         read_only_fields = fields
 
-    def get_order_id(self, obj):
+    def get_order_id(self, obj: Transaction) -> str:
         return str(obj.order.id)
 
 
@@ -143,9 +143,12 @@ class TransactionViewSet(viewsets.ReadOnlyModelViewSet):
     """Transaction management"""
     permission_classes = [IsAuthenticated]
     serializer_class = TransactionSerializer
+    queryset = Transaction.objects.none()
 
     def get_queryset(self):
         """Get user's transactions"""
+        if getattr(self, 'swagger_fake_view', False):
+            return Transaction.objects.none()
         return Transaction.objects.filter(user=self.request.user)
 
     @action(detail=True, methods=['post'])

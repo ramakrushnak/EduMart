@@ -30,6 +30,7 @@ class TokenRefreshViewCustom(TokenRefreshView):
 class LoginViewSet(viewsets.ViewSet):
     """Login viewset"""
     permission_classes = [AllowAny]
+    serializer_class = LoginSerializer
 
     @action(detail=False, methods=['post'], url_path='login')
     def login(self, request):
@@ -74,6 +75,7 @@ class LoginViewSet(viewsets.ViewSet):
 class RegisterViewSet(viewsets.ViewSet):
     """Registration viewset"""
     permission_classes = [AllowAny]
+    serializer_class = UserRegistrationSerializer
 
     @action(detail=False, methods=['post'], url_path='register')
     def register(self, request):
@@ -96,6 +98,7 @@ class RegisterViewSet(viewsets.ViewSet):
 class UserViewSet(viewsets.ViewSet):
     """User management endpoints"""
     permission_classes = [IsAuthenticated]
+    serializer_class = UserDetailSerializer
 
     @action(detail=False, methods=['get'])
     def profile(self, request):

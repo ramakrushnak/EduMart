@@ -144,7 +144,7 @@ class ProductSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['id', 'created_at', 'final_price']
 
-    def get_final_price(self, obj):
+    def get_final_price(self, obj: Product) -> float:
         return float(obj.get_final_price())
 
 
@@ -152,7 +152,11 @@ class ProductDetailSerializer(ProductSerializer):
     """Detailed product view"""
     average_rating = serializers.SerializerMethodField()
 
-    def get_average_rating(self, obj):
+    class Meta(ProductSerializer.Meta):
+        fields = ProductSerializer.Meta.fields + ['average_rating']
+        read_only_fields = ProductSerializer.Meta.read_only_fields + ['average_rating']
+
+    def get_average_rating(self, obj: Product) -> float:
         return 4.5
 
 
