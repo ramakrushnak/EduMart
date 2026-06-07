@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Order Details | EduMart</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}body{background:#f8fafc;color:#0f172a}header{background:#0f172a;color:white;padding:18px 8%}main{padding:60px 8%}.card{background:white;padding:24px;border-radius:12px;box-shadow:0 8px 20px rgba(15,23,42,0.06)}.table{width:100%;border-collapse:collapse;margin-top:12px}.table th,.table td{padding:12px;border-bottom:1px solid #eef2f7;text-align:left}.meta{color:#64748b;font-size:14px}.btn{display:inline-block;padding:8px 12px;background:#2563eb;color:white;border-radius:8px;text-decoration:none}</style>
+</head>
+<body>
+<header><div class="logo">EduMart</div></header>
+<main>
+    <div class="card">
+        <h1>Order Details</h1>
+        <div style="margin-top:8px" class="meta">Order ID: {{ order.id }}</div>
+        <div class="meta">Placed: {{ order.created_at }}</div>
+        <div class="meta">Status: {{ order.status }}</div>
+        {% if tracking %}
+            <div class="meta">Tracking: {{ tracking }}</div>
+        {% endif %}
+        {% if order.shipped_at %}
+            <div class="meta">Shipped at: {{ order.shipped_at }}</div>
+        {% endif %}
+        <div class="meta">Expected delivery: {% if expected_delivery %}{{ expected_delivery|date:"M d, Y" }}{% else %}—{% endif %}</div>
+
+        <div style="margin-top:12px">
+            <strong>Shipment Progress</strong>
+            <div style="display:flex;gap:12px;margin-top:8px;align-items:center">
+                {% for step in steps %}
+                    <div style="padding:8px 12px;border-radius:8px;background:{% if step.active %}#10b981{% else %}#e6eef6{% endif %};color:{% if step.active %}white{% else %}#334155{% endif %};font-weight:600">{{ step.status }}</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <h3 style="margin-top:18px">Items</h3>
+        <table class="table">
+            <thead>
+                <tr><th>Product</th><th>Unit Price</th><th>Quantity</th><th>Total</th></tr>
+            </thead>
+            <tbody>
+                {% for item in order.order_items.all %}
+                <tr>
+                    <td>{{ item.product.product_name }}</td>
+                    <td>₹{{ item.unit_price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.get_total|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div style="margin-top:18px;text-align:right;font-weight:700">Total: ₹{{ order.total_amount|floatformat:2 }}</div>
+
+        <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap">
+            <a href="{% url 'orders_list' %}" class="btn">Back to Orders</a>
+            <a href="{% url 'home' %}" class="btn" style="background:#0f172a">Home</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>

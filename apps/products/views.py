@@ -1,16 +1,39 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views.decorators.http import require_POST
+from django.db.models import Count, Q
 
-from .models import Product
+from .models import Product, ProductCategory
 from apps.carts.models import Cart, CartItem, CartCacheService
+
+
+def home_page(request):
+    """Render the homepage with category quick-links."""
+    categories = ProductCategory.objects.filter(is_active=True).annotate(
+        product_count=Count('products', filter=Q(products__is_active=True))
+    ).order_by('display_order', 'name')
+    return render(request, 'home.html', {
+        'categories': categories,
+    })
 
 
 def product_list(request):
     """Render the public product listing page."""
+    categories = ProductCategory.objects.filter(is_active=True).annotate(
+        product_count=Count('products', filter=Q(products__is_active=True))
+    ).order_by('display_order', 'name')
+    category_id = request.GET.get('category_id')
     products = Product.objects.filter(is_active=True).select_related('category')
+    selected_category = None
+
+    if category_id:
+        selected_category = get_object_or_404(ProductCategory, id=category_id, is_active=True)
+        products = products.filter(category=selected_category)
+
     return render(request, 'product_list.html', {
         'products': products,
+        'categories': categories,
+        'selected_category': selected_category,
     })
 
 

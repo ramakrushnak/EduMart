@@ -11,7 +11,7 @@ from apps.orders import views as orders_views
 from apps.accounts.auth_views import login_page, register_page, logout_page
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
+    path('', product_views.home_page, name='home'),
     # Admin
     path('admin/', admin.site.urls),
     # Authentication
@@ -22,6 +22,7 @@ urlpatterns = [
     path('products/', product_views.product_list, name='product_list'),
     path('products/add-to-cart/', product_views.add_to_cart, name='add_to_cart'),
     path('orders/', orders_views.orders_list, name='orders_list'),
+    path('orders/<uuid:order_id>/', orders_views.order_detail, name='order_detail'),
     path('cart/', cart_views.cart_page, name='cart_page'),
     path('cart/update-item/', cart_views.update_cart_item, name='update_cart_item'),
     path('cart/remove-item/', cart_views.remove_cart_item, name='remove_cart_item'),
