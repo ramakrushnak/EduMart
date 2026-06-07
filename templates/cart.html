@@ -61,6 +61,7 @@ main{padding:60px 8%;}
             <div>
                 <a href="{% url 'product_list' %}" class="btn">Continue Shopping</a>
                 <a href="{% url 'clear_cart' %}" class="btn">Clear Cart</a>
+                <a href="{% url 'checkout' %}" class="btn">Checkout</a>
             </div>
         </div>
 
@@ -87,7 +88,19 @@ main{padding:60px 8%;}
                     <tr>
                         <td>{{ item.product.product_name }}</td>
                         <td>₹{{ item.product.price }}</td>
-                        <td>{{ item.quantity }}</td>
+                        <td>
+                            <form method="post" action="{% url 'update_cart_item' %}" style="display:inline-block;">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <input type="number" name="quantity" min="0" value="{{ item.quantity }}" style="width:68px;padding:6px;border-radius:6px;border:1px solid #e2e8f0;">
+                                <button type="submit" class="btn" style="padding:8px 10px;margin-left:8px;">Update</button>
+                            </form>
+                            <form method="post" action="{% url 'remove_cart_item' %}" style="display:inline-block;margin-left:8px;">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <button type="submit" class="btn" style="background:#ef4444;border-radius:8px;padding:8px 10px;">Remove</button>
+                            </form>
+                        </td>
                         <td>₹{{ item.get_subtotal|floatformat:2 }}</td>
                     </tr>
                     {% endfor %}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed | EduMart</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}body{background:#f8fafc;color:#0f172a}header{background:#0f172a;color:white;padding:18px 8%}main{padding:60px 8%}.card{background:white;padding:28px;border-radius:12px;box-shadow:0 8px 20px rgba(15,23,42,0.06)}</style>
+</head>
+<body>
+<header><div class="logo">EduMart</div></header>
+<main>
+    <div class="card">
+        <h1>Thank you — your order is confirmed</h1>
+        <p style="margin-top:12px">Order ID: {{ order.id }}</p>
+        <p style="margin-top:8px">Status: {{ order.status }}</p>
+        <p style="margin-top:12px">We will contact you with shipping details shortly.</p>
+        <div style="margin-top:18px"><a href="{% url 'product_list' %}" class="btn" style="display:inline-block;padding:10px 14px;background:#2563eb;color:#fff;border-radius:8px;text-decoration:none;">Continue shopping</a></div>
+    </div>
+</main>
+</body>
+</html>

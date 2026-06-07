@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Orders | EduMart</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}body{background:#f8fafc;color:#0f172a}header{background:#0f172a;color:white;padding:18px 8%}main{padding:60px 8%}.card{background:white;padding:24px;border-radius:12px;box-shadow:0 8px 20px rgba(15,23,42,0.06)}.order{padding:16px;border-bottom:1px solid #eef2f7}.order:last-child{border-bottom:none}.meta{color:#64748b;font-size:14px}.btn{display:inline-block;padding:8px 12px;background:#2563eb;color:white;border-radius:8px;text-decoration:none}</style>
+</head>
+<body>
+<header><div class="logo">EduMart</div></header>
+<main>
+    <div class="card">
+        <h1>My Orders</h1>
+        {% if orders.exists %}
+            {% for order in orders %}
+            <div class="order">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <div><strong>Order ID:</strong> {{ order.id }}</div>
+                        <div class="meta">Placed: {{ order.created_at }}</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="meta">Status: {{ order.status }}</div>
+                        <a href="{% url 'order_confirmation' order_id=order.id %}" class="btn" style="margin-top:8px;display:inline-block">View</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No orders found. <a href="{% url 'product_list' %}">Start shopping</a>.</p>
+        {% endif %}
+    </div>
+</main>
+</body>
+</html>

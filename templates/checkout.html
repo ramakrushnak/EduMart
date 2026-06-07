@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | EduMart</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f8fafc;color:#0f172a;}
+header{background:#0f172a;color:white;padding:18px 8%;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-size:26px;font-weight:700;}
+nav a{color:white;text-decoration:none;margin-left:22px;font-weight:500;}
+main{padding:60px 8%;}
+.page-title{font-size:32px;margin-bottom:10px;}
+.grid{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start}
+.card{background:white;border-radius:12px;padding:20px;box-shadow:0 8px 20px rgba(15,23,42,0.06);}
+.field{margin-bottom:12px}
+label{display:block;font-weight:600;margin-bottom:6px}
+input, textarea{width:100%;padding:10px 12px;border:1px solid #e6eef6;border-radius:8px}
+.btn{display:inline-block;padding:12px 18px;background:#2563eb;color:white;border-radius:8px;text-decoration:none;border:none;cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+    <div class="logo">EduMart</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="{% url 'product_list' %}">Products</a>
+        <a href="{% url 'cart_page' %}">Cart</a>
+    </nav>
+</header>
+<main>
+    <h1 class="page-title">Checkout</h1>
+    <div class="grid">
+        <div>
+            <div class="card">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="place_order">
+                    <div class="field">
+                        <label for="shipping_address">Shipping address</label>
+                        <textarea id="shipping_address" name="shipping_address" rows="4" required></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="notes">Order notes (optional)</label>
+                        <textarea id="notes" name="notes" rows="3"></textarea>
+                    </div>
+
+                    <div style="margin-top:12px">
+                        <button type="submit" class="btn">Place Order (Cash on Delivery)</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <aside>
+            <div class="card">
+                <h3>Order Summary</h3>
+                {% if cart.items.exists %}
+                    <ul style="list-style:none;padding:0;margin:10px 0">
+                        {% for item in cart.items.all %}
+                        <li style="padding:8px 0;border-bottom:1px solid #eef2f7;">{{ item.product.product_name }} x{{ item.quantity }} — ₹{{ item.get_subtotal|floatformat:2 }}</li>
+                        {% endfor %}
+                    </ul>
+                    <div style="margin-top:12px;font-weight:700">Total: ₹{{ cart.get_total|floatformat:2 }}</div>
+                {% else %}
+                    <p>Your cart is empty.</p>
+                {% endif %}
+            </div>
+        </aside>
+    </div>
+</main>
+</body>
+</html>
