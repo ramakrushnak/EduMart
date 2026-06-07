@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop Products | EduMart</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f8fafc;color:#0f172a;}
+header{background:#0f172a;color:white;padding:18px 8%;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-size:26px;font-weight:700;}
+nav a{color:white;text-decoration:none;margin-left:22px;font-weight:500;}
+main{padding:60px 8%;}
+.page-title{font-size:36px;margin-bottom:20px;}
+.description{font-size:16px;color:#475569;margin-bottom:30px;}
+.messages{margin-bottom:25px;}
+.message{padding:16px 20px;border-radius:12px;margin-bottom:12px;}
+.message.success{background:#dcfce7;color:#166534;}
+.message.error{background:#fee2e2;color:#991b1b;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
+.product-card{background:white;border-radius:18px;overflow:hidden;box-shadow:0 12px 28px rgba(15,23,42,0.08);display:flex;flex-direction:column;}
+.product-card img{width:100%;height:220px;object-fit:cover;display:block;}
+.product-body{padding:22px;display:flex;flex-direction:column;gap:14px;}
+.product-body h2{font-size:22px;}
+.product-body p{color:#475569;line-height:1.6;}
+.product-meta{display:flex;flex-wrap:wrap;gap:12px;font-size:14px;color:#475569;}
+.badge{background:#e2e8f0;border-radius:999px;padding:6px 12px;display:inline-block;}
+.price{font-size:20px;font-weight:700;color:#0f172a;}
+.form-row{margin-top:auto;display:flex;gap:12px;align-items:center;}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border:none;border-radius:999px;background:#2563eb;color:white;font-weight:600;cursor:pointer;transition:background .2s ease;}
+.btn:hover{background:#1d4ed8;}
+.btn[disabled]{background:#cbd5e1;cursor:not-allowed;}
+.footer{margin-top:50px;padding:30px 0;text-align:center;color:#64748b;font-size:14px;}
+</style>
+</head>
+<body>
+<header>
+    <div class="logo">EduMart</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="{% url 'product_list' %}">Products</a>
+        <a href="{% url 'cart_page' %}">Cart</a>
+        {% if user.is_authenticated %}
+            <span style="color:#cbd5e1;">|</span>
+            <span style="color:#475569;">{{ user.first_name|default:user.email }}</span>
+            <a href="{% url 'logout_page' %}">Logout</a>
+        {% else %}
+            <span style="color:#cbd5e1;">|</span>
+            <a href="{% url 'login_page' %}">Login</a>
+            <a href="{% url 'register_page' %}">Register</a>
+        {% endif %}
+    </nav>
+</header>
+<main>
+    <h1 class="page-title">Explore Products</h1>
+    <p class="description">Browse the latest school supplies and add items to your cart for checkout.</p>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="grid">
+        {% for product in products %}
+            <article class="product-card">
+                {% if product.images %}
+                    <img src="{{ product.images.0 }}" alt="{{ product.product_name }}">
+                {% else %}
+                    <div style="height:220px;background:#e2e8f0;display:flex;align-items:center;justify-content:center;color:#64748b;">No image available</div>
+                {% endif %}
+                <div class="product-body">
+                    <div>
+                        <h2>{{ product.product_name }}</h2>
+                        <p class="badge">{{ product.category.name }}</p>
+                    </div>
+                    <p>{{ product.description|truncatechars:120 }}</p>
+                    <div class="product-meta">
+                        <span class="price">₹{{ product.price }}</span>
+                        <span class="badge">{{ product.get_availability_status_display }}</span>
+                    </div>
+                    <div class="form-row">
+                        <form method="post" action="{% url 'add_to_cart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn" {% if product.stock_quantity == 0 %}disabled{% endif %}>
+                                Add to Cart
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </article>
+        {% empty %}
+            <p>No products are currently available.</p>
+        {% endfor %}
+    </div>
+</main>
+<footer class="footer">EduMart &copy; 2026 — Your school supplies marketplace</footer>
+</body>
+</html>

@@ -55,3 +55,28 @@ class TestProductCategories:
         response = api_client.get('/api/v1/products/categories/')
         assert response.status_code == status.HTTP_200_OK
         assert len(response.data['results']) > 0
+
+
+@pytest.mark.django_db
+class TestProductPages:
+    """Test product page views"""
+
+    def test_product_list_page(self, client, product):
+        response = client.get('/products/')
+        assert response.status_code == 200
+        assert b'Explore Products' in response.content
+
+    def test_add_to_cart_requires_login(self, client, product):
+        response = client.post('/products/add-to-cart/', {
+            'product_id': product.id,
+            'quantity': 1,
+        })
+        assert response.status_code == 302
+
+    def test_add_to_cart_when_logged_in(self, client, student_user, product):
+        client.force_login(student_user)
+        response = client.post('/products/add-to-cart/', {
+            'product_id': product.id,
+            'quantity': 1,
+        })
+        assert response.status_code == 302

@@ -5,12 +5,24 @@ from django.conf.urls.static import static
 from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from apps.products import views as product_views
+from apps.carts import views as cart_views
+from apps.accounts.auth_views import login_page, register_page, logout_page
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     # Admin
     path('admin/', admin.site.urls),
-
+    # Authentication
+    path('login/', login_page, name='login_page'),
+    path('register/', register_page, name='register_page'),
+    path('logout/', logout_page, name='logout_page'),
+    # Product browsing
+    path('products/', product_views.product_list, name='product_list'),
+    path('products/add-to-cart/', product_views.add_to_cart, name='add_to_cart'),
+    path('cart/', cart_views.cart_page, name='cart_page'),
+    path('cart/clear/', cart_views.clear_cart, name='clear_cart'),
+    path('stationery/', product_views.product_list, name='stationery_products'),
     # Health Check
     path('health/', include('apps.shared.urls', namespace='health')),
 
