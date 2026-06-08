@@ -9,7 +9,27 @@
 <style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}body{background:#f8fafc;color:#0f172a}header{background:#0f172a;color:white;padding:18px 8%}main{padding:60px 8%}.card{background:white;padding:24px;border-radius:12px;box-shadow:0 8px 20px rgba(15,23,42,0.06)}.order{padding:16px;border-bottom:1px solid #eef2f7}.order:last-child{border-bottom:none}.meta{color:#64748b;font-size:14px}.btn{display:inline-block;padding:8px 12px;background:#2563eb;color:white;border-radius:8px;text-decoration:none}</style>
 </head>
 <body>
-<header><div class="logo">EduMart</div></header>
+<header>
+    <div class="header-container">
+        <div class="logo">EduMart</div>
+
+        <nav class="top-nav">
+            <a href="/">Home</a>
+            <a href="{% url 'product_list' %}">Products</a>
+            <a href="{% url 'cart_page' %}">Cart</a>
+
+            {% if user.is_authenticated %}
+                <span class="separator">|</span>
+                <span class="username">{{ user.first_name|default:user.email }}</span>
+                <a href="{% url 'logout_page' %}">Logout</a>
+            {% else %}
+                <span class="separator">|</span>
+                <a href="{% url 'login_page' %}">Login</a>
+                <a href="{% url 'register_page' %}">Register</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
 <main>
     <div class="card">
         <h1>My Orders</h1>
@@ -55,3 +75,46 @@
 </main>
 </body>
 </html>
+
+<style>
+    header {
+    background: #0f172a;
+    color: white;
+    padding: 18px 8%;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.top-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.top-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.top-nav a:hover {
+    color: #60a5fa;
+}
+
+.username {
+    color: #e2e8f0;
+}
+
+.separator {
+    color: #94a3b8;
+}
+</style>

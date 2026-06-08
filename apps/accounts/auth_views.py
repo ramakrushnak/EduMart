@@ -19,7 +19,7 @@ def login_page(request):
         if user is not None:
             login(request, user)
             messages.success(request, f"Welcome back, {user.first_name or user.email}!")
-            return redirect("product_list")
+            return redirect("home")
         else:
             messages.error(request, "Invalid email or password.")
     
